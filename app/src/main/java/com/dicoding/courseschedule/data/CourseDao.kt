@@ -7,6 +7,8 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.selects.select
 
 //TODO 2 : Define data access object (DAO)
+
+@Dao
 interface CourseDao {
 
     @RawQuery(observedEntities = [Course::class])
