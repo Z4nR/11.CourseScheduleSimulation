@@ -29,6 +29,6 @@ interface CourseDao {
     @Delete
     fun delete(course: Course)
 
-    @Query("select * from course")
+    @RawQuery(observedEntities = [Course::class])
     fun sort(params: String): DataSource.Factory<Int, Course>
 }
