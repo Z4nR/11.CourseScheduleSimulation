@@ -1,8 +1,6 @@
 package com.dicoding.courseschedule.data
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -11,7 +9,6 @@ import com.dicoding.courseschedule.util.QueryUtil.nearestQuery
 import com.dicoding.courseschedule.util.QueryUtil.sortedQuery
 import com.dicoding.courseschedule.util.SortType
 import com.dicoding.courseschedule.util.executeThread
-import java.time.LocalDate
 import java.util.*
 
 //TODO 4 : Implement repository with appropriate dao
