@@ -11,7 +11,6 @@ import com.dicoding.courseschedule.util.QueryUtil.nearestQuery
 import com.dicoding.courseschedule.util.QueryUtil.sortedQuery
 import com.dicoding.courseschedule.util.SortType
 import com.dicoding.courseschedule.util.executeThread
-import java.time.DayOfWeek
 import java.time.LocalDate
 
 //TODO 4 : Implement repository with appropriate dao

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
-import kotlinx.coroutines.selects.select
 
 //TODO 2 : Define data access object (DAO)
 
