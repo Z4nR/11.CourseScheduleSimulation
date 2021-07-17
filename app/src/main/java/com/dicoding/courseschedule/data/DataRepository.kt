@@ -12,6 +12,7 @@ import com.dicoding.courseschedule.util.QueryUtil.sortedQuery
 import com.dicoding.courseschedule.util.SortType
 import com.dicoding.courseschedule.util.executeThread
 import java.time.LocalDate
+import java.util.*
 
 //TODO 4 : Implement repository with appropriate dao
 class DataRepository(private val dao: CourseDao) {
@@ -35,10 +36,8 @@ class DataRepository(private val dao: CourseDao) {
         return dao.getCourse(id)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getTodaySchedule() : List<Course> {
-        val date : LocalDate = LocalDate.now()
-        val today : Int = date.dayOfWeek.value
+        val today = Calendar.DAY_OF_WEEK
         return dao.getTodaySchedule(today)
     }
 
