@@ -17,6 +17,8 @@ import com.dicoding.courseschedule.data.Course
 import com.dicoding.courseschedule.paging.CourseAdapter
 import com.dicoding.courseschedule.paging.CourseViewHolder
 import com.dicoding.courseschedule.ui.add.AddCourseActivity
+import com.dicoding.courseschedule.ui.detail.DetailActivity
+import com.dicoding.courseschedule.ui.detail.DetailActivity.Companion.COURSE_ID
 import com.dicoding.courseschedule.ui.setting.SettingsActivity
 import com.dicoding.courseschedule.util.SortType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,6 +54,9 @@ class ListActivity : AppCompatActivity() {
 
     private fun onCourseClick(course: Course) {
         //TODO 8 : Intent and show detailed course
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(COURSE_ID, course.id)
+        startActivity(intent)
     }
 
     private fun initAction() {
