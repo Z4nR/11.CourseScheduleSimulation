@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.courseschedule.R
 import com.dicoding.courseschedule.util.TimePickerFragment
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListener {
@@ -21,11 +20,25 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
 
     private lateinit var addCourseViewModel: AddCourseViewModel
 
+    private lateinit var courseName : EditText
+    private lateinit var courseLecture : EditText
+    private lateinit var courseNote : EditText
+    private lateinit var addDaySpinner : Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_course)
 
         supportActionBar?.title = getString(R.string.add_course)
+
+        courseName = findViewById(R.id.add_course)
+        courseLecture = findViewById(R.id.add_lecturer)
+        courseNote = findViewById(R.id.add_note)
+        addDaySpinner = findViewById(R.id.spinner_day)
+
+        val factory = AddCourseViewModelFactory.createFactory(this)
+        addCourseViewModel = ViewModelProvider(this, factory)[AddCourseViewModel::class.java]
+        addCourseViewModel.saved
 
     }
 
@@ -37,38 +50,40 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_insert -> {
-                val addCourseName = findViewById<EditText>(R.id.add_course).text.toString()
-                val addLecture = findViewById<EditText>(R.id.add_lecturer).text.toString()
-                val addNote = findViewById<EditText>(R.id.add_note).text.toString()
-
-                val addDaySpinner = findViewById<Spinner>(R.id.spinner_day)
+                val addCourseName = courseName.text.toString()
+                val addLecture = courseLecture.text.toString()
+                val addNote = courseNote.text.toString()
                 val addDayText = addDaySpinner.selectedItemPosition
-
-                val factory = AddCourseViewModelFactory.createFactory(this)
-                addCourseViewModel = ViewModelProvider(this, factory)[AddCourseViewModel::class.java]
                 addCourseViewModel.insertCourse(addCourseName, addDayText, startTimeCourse.toString(), endTimeCourse.toString(), addLecture, addNote)
-                addCourseViewModel.saved
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun showTimePicker(view: View) {
+    fun showTimePickerStart(view: View) {
         val dialogFragment = TimePickerFragment()
-        dialogFragment.show(supportFragmentManager, "timePicker")
+        dialogFragment.show(supportFragmentManager, "timeStartPicker")
+    }
+
+    fun showTimePickerEnd(view: View) {
+        val dialogFragment = TimePickerFragment()
+        dialogFragment.show(supportFragmentManager, "timeEndPicker")
     }
 
     override fun onDialogTimeSet(tag: String?, hour: Int, minute: Int) {
         val calendar = Calendar.getInstance()
-        calendar.set(hour, minute)
-        val startTime = SimpleDateFormat("HH:mm", Locale.getDefault())
-        findViewById<TextView>(R.id.textTimeStart).text = startTime.format(calendar.time)
-        startTimeCourse = calendar.timeInMillis
+        val timeFormat = "$hour:$minute"
 
-        val endTime = SimpleDateFormat("HH:mm", Locale.getDefault())
-        findViewById<TextView>(R.id.textTimeEnd).text = endTime.format(calendar.time)
-        endTimeCourse = calendar.timeInMillis
-
+        when (tag) {
+            "timeStartPicker" -> {
+                findViewById<TextView>(R.id.textTimeStart).text = timeFormat
+                startTimeCourse = calendar.timeInMillis
+            }
+            else -> {
+                findViewById<TextView>(R.id.textTimeEnd).text = timeFormat
+                endTimeCourse = calendar.timeInMillis
+            }
+        }
     }
 }
