@@ -44,6 +44,7 @@ class ListActivity : AppCompatActivity() {
         setUpRecycler()
         initAction()
         updateList()
+        showSortMenu()
     }
 
     private fun setUpRecycler() {
@@ -140,7 +141,7 @@ class ListActivity : AppCompatActivity() {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val course = (viewHolder as CourseViewHolder).getCourse()
-
+            viewModel.delete(course)
         }
     }
 }
