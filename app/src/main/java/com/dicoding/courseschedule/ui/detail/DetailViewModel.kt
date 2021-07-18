@@ -14,4 +14,5 @@ class DetailViewModel(private val repository: DataRepository, courseId: Int) : V
             repository.delete(it)
         }
     }
+
 }

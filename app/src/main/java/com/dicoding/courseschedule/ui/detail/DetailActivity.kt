@@ -3,8 +3,10 @@ package com.dicoding.courseschedule.ui.detail
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.dicoding.courseschedule.R
 import com.dicoding.courseschedule.data.Course
 import com.dicoding.courseschedule.util.DayName.Companion.getByNumber
@@ -15,6 +17,11 @@ class DetailActivity : AppCompatActivity() {
         const val COURSE_ID = "courseId"
     }
 
+    private lateinit var courseNote: TextView
+    private lateinit var courseLecture: TextView
+    private lateinit var courseTime: TextView
+    private lateinit var nameCourse: TextView
+
     private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +30,15 @@ class DetailActivity : AppCompatActivity() {
 
         val courseId = intent.getIntExtra(COURSE_ID, 0)
         val factory = DetailViewModelFactory.createFactory(this, courseId)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+        viewModel.course.observe(this, {
+            showCourseDetail(it)
+        })
 
+        nameCourse = findViewById(R.id.tv_course_name)
+        courseTime = findViewById(R.id.tv_time)
+        courseLecture = findViewById(R.id.tv_lecturer)
+        courseNote = findViewById(R.id.tv_note)
 
     }
 
@@ -32,7 +47,10 @@ class DetailActivity : AppCompatActivity() {
             val timeString = getString(R.string.time_format)
             val dayName = getByNumber(day)
             val timeFormat = String.format(timeString, dayName, startTime, endTime)
-
+            courseTime.text = timeFormat
+            courseLecture.text = lecturer
+            courseNote.text = note
+            nameCourse.text = courseName
         }
     }
 
