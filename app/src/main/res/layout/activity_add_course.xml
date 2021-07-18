@@ -45,6 +45,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_time"
+            android:onClick="showTimePicker"
             android:contentDescription="@string/start_time"/>
 
         <LinearLayout
@@ -72,6 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_time"
+            android:onClick="showTimePicker"
             android:contentDescription="@string/end_time"/>
 
         <LinearLayout

@@ -3,6 +3,7 @@ package com.dicoding.courseschedule.ui.add
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -39,9 +40,12 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
                 val addCourseName = findViewById<EditText>(R.id.add_course).text.toString()
                 val addLecture = findViewById<EditText>(R.id.add_lecturer).text.toString()
                 val addNote = findViewById<EditText>(R.id.add_note).text.toString()
+
                 val addDaySpinner = findViewById<Spinner>(R.id.spinner_day)
                 val addDayText = addDaySpinner.selectedItemPosition
-                addCourseViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(AddCourseViewModel::class.java)
+
+                val factory = AddCourseViewModelFactory.createFactory(this)
+                addCourseViewModel = ViewModelProvider(this, factory)[AddCourseViewModel::class.java]
                 addCourseViewModel.insertCourse(addCourseName, addDayText, startTimeCourse.toString(), endTimeCourse.toString(), addLecture, addNote)
                 addCourseViewModel.saved
                 true
@@ -50,14 +54,19 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
         }
     }
 
+    fun showTimePicker(view: View) {
+        val dialogFragment = TimePickerFragment()
+        dialogFragment.show(supportFragmentManager, "timePicker")
+    }
+
     override fun onDialogTimeSet(tag: String?, hour: Int, minute: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(hour, minute)
-        val startTime = SimpleDateFormat("hh:mm", Locale.getDefault())
+        val startTime = SimpleDateFormat("HH:mm", Locale.getDefault())
         findViewById<TextView>(R.id.textTimeStart).text = startTime.format(calendar.time)
         startTimeCourse = calendar.timeInMillis
 
-        val endTime = SimpleDateFormat("hh:mm", Locale.getDefault())
+        val endTime = SimpleDateFormat("HH:mm", Locale.getDefault())
         findViewById<TextView>(R.id.textTimeEnd).text = endTime.format(calendar.time)
         endTimeCourse = calendar.timeInMillis
 

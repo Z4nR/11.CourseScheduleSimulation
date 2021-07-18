@@ -28,6 +28,6 @@ interface CourseDao {
     @Delete
     fun delete(course: Course)
 
-    @Query("select * from course where courseName or startTime or lecturer = :params")
+    @Query("select * from course order by :params")
     fun sort(params: String): DataSource.Factory<Int, Course>
 }
