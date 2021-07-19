@@ -11,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.courseschedule.R
 import com.dicoding.courseschedule.util.TimePickerFragment
-import java.util.*
 
 class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListener {
 
-    private var startTimeCourse: Long = System.currentTimeMillis()
-    private var endTimeCourse: Long = System.currentTimeMillis()
+    private lateinit var startTimeCourse: String
+    private lateinit var endTimeCourse: String
 
     private lateinit var addCourseViewModel: AddCourseViewModel
 
@@ -54,7 +53,7 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
                 val addLecture = courseLecture.text.toString()
                 val addNote = courseNote.text.toString()
                 val addDayText = addDaySpinner.selectedItemPosition
-                addCourseViewModel.insertCourse(addCourseName, addDayText, startTimeCourse.toString(), endTimeCourse.toString(), addLecture, addNote)
+                addCourseViewModel.insertCourse(addCourseName, addDayText, startTimeCourse, endTimeCourse, addLecture, addNote)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -72,17 +71,16 @@ class AddCourseActivity : AppCompatActivity(), TimePickerFragment.DialogTimeList
     }
 
     override fun onDialogTimeSet(tag: String?, hour: Int, minute: Int) {
-        val calendar = Calendar.getInstance()
         val timeFormat = "$hour:$minute"
 
         when (tag) {
             "timeStartPicker" -> {
                 findViewById<TextView>(R.id.textTimeStart).text = timeFormat
-                startTimeCourse = calendar.timeInMillis
+                startTimeCourse = timeFormat
             }
             else -> {
                 findViewById<TextView>(R.id.textTimeEnd).text = timeFormat
-                endTimeCourse = calendar.timeInMillis
+                endTimeCourse = timeFormat
             }
         }
     }
