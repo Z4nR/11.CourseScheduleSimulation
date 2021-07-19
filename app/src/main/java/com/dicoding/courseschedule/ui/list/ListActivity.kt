@@ -44,7 +44,6 @@ class ListActivity : AppCompatActivity() {
         setUpRecycler()
         initAction()
         updateList()
-        showSortMenu()
     }
 
     private fun setUpRecycler() {
@@ -77,7 +76,7 @@ class ListActivity : AppCompatActivity() {
 
     private fun setFabClick() {
         //TODO 9 : Create AddCourseActivity to set new course schedule
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             val addIntent = Intent(this, AddCourseActivity::class.java)
             startActivity(addIntent)
         }
@@ -111,6 +110,7 @@ class ListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort -> {
+                showSortMenu()
                 true
             }
             R.id.action_settings -> {

@@ -29,16 +29,6 @@ class DataRepository(private val dao: CourseDao) {
         return LivePagedListBuilder(dao.getAll(courseType), config).build()
     }
 
-    fun sort(sortType: SortType): LiveData<PagedList<Course>> {
-        val sortCourse = sortedQuery(sortType).toString()
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(4)
-            .setPageSize(PAGE_SIZE)
-            .build()
-        return LivePagedListBuilder(dao.sort(sortCourse), config).build()
-    }
-
     fun getCourse(id: Int) : LiveData<Course> {
         return dao.getCourse(id)
     }

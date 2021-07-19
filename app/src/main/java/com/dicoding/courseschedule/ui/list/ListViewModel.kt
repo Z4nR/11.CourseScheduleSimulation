@@ -21,7 +21,6 @@ class ListViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun sort(newValue: SortType) {
         _sortParams.value = newValue
-        repository.sort(newValue)
     }
 
     fun delete(course: Course) {
